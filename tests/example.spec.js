@@ -29,22 +29,21 @@ test.describe('SwiftTranslator Automation Tests', () => {
         { id: "Pos_Fun_0023", input: "oyaa enakam mama balan innavaa", expected: "ඔයා එනකම් මම බලන් ඉන්නවා" },
         { id: "Pos_Fun_0024", input: "mama adha udhaasanama nagitalaa vaeda karalaa passe gedhara giyaa", expected: "මම අද උදාසනම නගිටලා වැඩ කරලා පස්සෙ ගෙදර ගියා" },
 
-        // Negative functional test cases (Neg_Fun_xxxx)
-        { id: "Neg_Fun_0001", input: "mamagedharayanawa", expected: "මමගෙදරයනwඅ" },               // garbled: translator outputs w+අ for final va
-        { id: "Neg_Fun_0002", input: "matabathkannaoonee", expected: "මටබත්කන්නඕනේ" }, // likely incorrect
+        // Negative functional test cases
+        { id: "Neg_Fun_0001", input: "mamagedharayanawa", expected: "මමගෙදරයනwඅ" },             
+        { id: "Neg_Fun_0002", input: "matabathkannaoonee", expected: "මටබත්කන්නඕනේ" }, 
         { id: "Neg_Fun_0003", input: "ela machan supiri kiri", expected: "එල මචන් සුපිරි කිරි" },
-        { id: "Neg_Fun_0003a", input: "mama   gedhara   yanavaa.", expected: "මම   ගෙදර   යනවා." },  // spaces may collapse
-        { id: "Neg_Fun_0004", input: "MaMa GeDhArA YaNaVaA", expected: "මම ඟෙධර YඅණVඅඅ" },     // mixed case - garbled output
-        { id: "Neg_Fun_0005", input: "mama@@ gedhara!!", expected: "මම@@ ගෙදර!!" },             // special chars - symbols preserved
-        { id: "Neg_Fun_0006", input: "mama gedhara yanavaa\noyaa enavadha", expected: "මම ගෙදර යනවා\nඔයා එනවද" },            // fix: නොයා → ඔයා (oyaa = you)
-        { id: "Neg_Fun_0007", input: "mama gedhara yanavaa", expected: "මම ගෙදර යනවා" },      // slang may be partially wrong
-        { id: "Neg_Fun_0008", input: "mama gedhara", expected: "මම ගෙදර" },                      // incomplete phrase - no completion
-        { id: "Neg_Fun_0009", input: "mama ### yanavaa", expected: "මම ### යනවා" }, // slang issue
+        { id: "Neg_Fun_0003a", input: "mama   gedhara   yanavaa.", expected: "මම   ගෙදර   යනවා." }, 
+        { id: "Neg_Fun_0004", input: "MaMa GeDhArA YaNaVaA", expected: "මම ඟෙධර YඅණVඅඅ" },   
+        { id: "Neg_Fun_0005", input: "mama@@ gedhara!!", expected: "මම@@ ගෙදර!!" },          
+        { id: "Neg_Fun_0006", input: "mama gedhara yanavaa\noyaa enavadha", expected: "මම ගෙදර යනවා\nඔයා එනවද" },            
+        { id: "Neg_Fun_0007", input: "mama gedhara yanavaa", expected: "මම ගෙදර යනවා" },     
+        { id: "Neg_Fun_0008", input: "mama gedhara", expected: "මම ගෙදර" },                    
+        { id: "Neg_Fun_0009", input: "mama ### yanavaa", expected: "මම ### යනවා" }, 
         
     ];
 
     test.beforeEach(async ({ page }) => {
-    // Go to the starting url before each test.
         await page.goto('https://www.swifttranslator.com/');
     });
 
@@ -53,10 +52,10 @@ test.describe('SwiftTranslator Automation Tests', () => {
           const inputField = page.locator('textarea[placeholder="Input Your Singlish Text Here."]');
           const outputField = page.locator('div.whitespace-pre-wrap').nth(0);
     
-          // Steps for functional test cases [cite: 303-305]
+        
           await inputField.fill(scenario.input);
 
-          // Wait for translation: poll until output appears (or timeout for empty-expected cases)
+         
           if (scenario.expected) {
             await expect(async () => {
               const text = await outputField.innerText();
@@ -67,9 +66,9 @@ test.describe('SwiftTranslator Automation Tests', () => {
           }
 
           const actualOutput = await outputField.innerText();
-          // Log the actual output for debugging
+         
           console.log(`Test ${scenario.id} | Input: ${scenario.input} | Expected: ${scenario.expected} | Actual: '${actualOutput.trim()}'`);
-          // Assert that the generated output matches your expected output
+          
           expect(actualOutput.trim()).toBe(scenario.expected);
         });
     }
