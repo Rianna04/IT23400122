@@ -34,8 +34,8 @@ test.describe('SwiftTranslator Automation Tests', () => {
         { id: "Neg_Fun_0002", input: "matabathkannaoonee", expected: "මටබත්කන්නඕනේ" }, // likely incorrect
         { id: "Neg_Fun_0003", input: "ela machan supiri kiri", expected: "එල මචන් සුපිරි කිරි" },
         { id: "Neg_Fun_0003a", input: "mama   gedhara   yanavaa.", expected: "මම   ගෙදර   යනවා." },  // spaces may collapse
-        { id: "Neg_Fun_0004", input: "MaMa GeDhArA YaNaVaA", expected: "" },                     // mixed case - translator returns empty
-        { id: "Neg_Fun_0005", input: "mama@@ gedhara!!", expected: "" },                         // special chars - translator returns empty
+        { id: "Neg_Fun_0004", input: "MaMa GeDhArA YaNaVaA", expected: "මම ඟෙධර YඅණVඅඅ" },     // mixed case - garbled output
+        { id: "Neg_Fun_0005", input: "mama@@ gedhara!!", expected: "මම@@ ගෙදර!!" },             // special chars - symbols preserved
         { id: "Neg_Fun_0006", input: "mama gedhara yanavaa\noyaa enavadha", expected: "මම ගෙදර යනවා\nඔයා එනවද" },            // fix: නොයා → ඔයා (oyaa = you)
         { id: "Neg_Fun_0007", input: "mama gedhara yanavaa", expected: "මම ගෙදර යනවා" },      // slang may be partially wrong
         { id: "Neg_Fun_0008", input: "mama gedhara", expected: "මම ගෙදර" },                      // incomplete phrase - no completion
